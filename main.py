@@ -1,14 +1,9 @@
-import fastapi
-import pydantic
+from fastapi import FastAPI
+from service.cutomer_serivce import CustomerService
+app = FastAPI()
 
 
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
-
-
-# Press the green button in the gutter to run the script.
-if __name__ == '__main__':
-    print_hi('PyCharm')
-
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+@app.get("/api/customer/{customer_id}")
+def get_customer(customer_id: int):
+    customer_service = CustomerService()
+    return customer_service.get_customer(customer_id)
