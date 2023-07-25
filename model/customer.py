@@ -1,10 +1,12 @@
+from uuid import UUID
+
 from pydantic import BaseModel
 
 from model.address import Address
 
 
 class Customer(BaseModel):
-    customer_id: int
+    customer_id: UUID
     customer_name: str
     first_name: str
     last_name: str

@@ -1,8 +1,10 @@
+from uuid import UUID
+
 from pydantic import BaseModel
 
 
 class Address(BaseModel):
-    address_id: int
+    address_id: UUID
     house_address: str
     area: str
     city: str
