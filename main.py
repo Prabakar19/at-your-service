@@ -1,6 +1,8 @@
 import uvicorn
 from fastapi import FastAPI
+
 from service.cutomer_serivce import CustomerService
+
 app = FastAPI()
 
 
