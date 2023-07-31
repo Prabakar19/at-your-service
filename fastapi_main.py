@@ -13,4 +13,4 @@ async def get_customer(customer_id: str):
 
 
 if __name__ == "__main__":
-    uvicorn.run(app, host="localhost", port=9098)
+    uvicorn.run('fastapi_main:app', host="localhost", port=9098)
