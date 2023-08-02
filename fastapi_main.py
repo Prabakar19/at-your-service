@@ -1,15 +1,18 @@
 import uvicorn
 from fastapi import FastAPI
 
-from service.cutomer_serivce import CustomerService
-
-app = FastAPI()
+from endpoints import customer
 
 
-@app.get("/api/customer/{customer_id}")
-async def get_customer(customer_id: str):
-    customer_service = CustomerService()
-    return await customer_service.get_customer(customer_id)
+def get_application() -> FastAPI:
+    """ Configure, start and return the application """
+    application = FastAPI()
+
+    application.include_router(customer.router)
+    return application
+
+
+app = get_application()
 
 
 if __name__ == "__main__":
