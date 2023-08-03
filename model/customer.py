@@ -1,3 +1,4 @@
+from typing import Optional
 from uuid import UUID
 
 from pydantic import BaseModel
@@ -13,5 +14,5 @@ class Customer(BaseModel):
     email_id: str
     phone_number: str
     password: str
-    address: Address
+    # address: Optional[Address]
 

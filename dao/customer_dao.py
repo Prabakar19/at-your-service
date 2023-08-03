@@ -20,7 +20,7 @@ class CustomerDao(DbBase):
 
     @classmethod
     async def add_customer(cls, customer):
-        query = [sa.insert(CustomerDao).values(customer)]
+        query = [sa.insert(CustomerDao).values(customer.dict())]
         await PostgresProvider.execute(query)
 
     @classmethod

@@ -10,3 +10,7 @@ class CustomerService:
 
     async def add_customer(self, customer: Customer):
         await CustomerDao.add_customer(customer)
+
+
+    async def update_customer(self, customer: Customer):
+        await CustomerDao.update_customer(customer)
