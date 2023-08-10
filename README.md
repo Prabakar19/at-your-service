@@ -9,3 +9,7 @@ This project is created in terms of learning Fastapi in Python by creating onlin
 - Python
 - FastAPI
 - PostgreSQL
+
+
+**Database Architecure**
+![plot](atyourservice-uml.png)
