@@ -15,7 +15,7 @@ class CategoryDao(DbBase):
     @classmethod
     async def add_category(cls, category):
         query = [sa.insert(cls).values(category)]
-        await PostgresProvider.execute(query)
+        await PostgresProvider.execute_transaction(query)
 
     @classmethod
     async def get_category_by_id(cls, category_id: str) -> List[Dict[str, Any]]:

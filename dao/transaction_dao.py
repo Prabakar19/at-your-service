@@ -19,7 +19,7 @@ class TransactionDao(DbBase):
     @classmethod
     async def add_transaction(cls, transaction):
         query = [sa.insert(cls).values(transaction)]
-        await PostgresProvider.execute(query)
+        await PostgresProvider.execute_transaction(query)
 
     @classmethod
     async def get_transaction_by_id(cls, transaction_id: str) -> List[Dict[str, Any]]:

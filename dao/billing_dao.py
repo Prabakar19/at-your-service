@@ -19,7 +19,7 @@ class BillingDao(DbBase):
     @classmethod
     async def add_billing(cls, billing):
         query = [sa.insert(cls).values(billing)]
-        await PostgresProvider.execute(query)
+        await PostgresProvider.execute_transaction(query)
 
     @classmethod
     async def get_billing_by_id(cls, billing_id: str) -> List[Dict[str, Any]]:

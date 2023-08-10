@@ -43,6 +43,20 @@ class PostgresProvider:
             return await conn.execute(query)
 
     @classmethod
+    async def execute_transaction(cls, statement):
+        async with cls.pool.get_connection() as conn:
+            transaction = await conn.begin()
+            try:
+                for s in statement:
+                    await conn.execute(s)
+            except Exception as e:
+                await transaction.rollback()
+                print('DB error %s. rolling back Transaction' % e)
+                raise ValueError('DB error %s. rolling back Transaction' % e)
+            else:
+                await transaction.commit()
+
+    @classmethod
     async def get_list(cls, query) -> List[Dict[str, Any]]:
         async with cls.pool.get_connection() as conn:
             result = []

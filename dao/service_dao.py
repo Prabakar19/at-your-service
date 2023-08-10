@@ -25,7 +25,7 @@ class ServiceDao(DbBase):
     @classmethod
     async def add_service(cls, service):
         query = [sa.insert(cls).values(service)]
-        await PostgresProvider.execute(query)
+        await PostgresProvider.execute_transaction(query)
 
     @classmethod
     async def get_service_by_id(cls, service_id: str) -> List[Dict[str, Any]]:

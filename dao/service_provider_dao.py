@@ -19,7 +19,7 @@ class ServiceProviderDao(DbBase):
     @classmethod
     async def add_service_provider(cls, service_provider):
         query = [sa.insert(cls).values(service_provider)]
-        await PostgresProvider.execute(query)
+        await PostgresProvider.execute_transaction(query)
 
     @classmethod
     async def get_service_provider_by_id(cls, service_provider_id: str) -> List[Dict[str, Any]]:

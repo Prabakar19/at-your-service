@@ -21,7 +21,7 @@ class CustomerDao(DbBase):
     @classmethod
     async def add_customer(cls, customer):
         query = [sa.insert(CustomerDao).values(customer.dict())]
-        await PostgresProvider.execute(query)
+        await PostgresProvider.execute_transaction(query)
 
     @classmethod
     async def get_customer_by_name(cls, customer_name: str) -> List[Dict[str, Any]]:

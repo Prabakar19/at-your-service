@@ -19,7 +19,7 @@ class AddressDao(DbBase):
     @classmethod
     async def add_address(cls, address):
         query = [sa.insert(cls).values(address)]
-        await PostgresProvider.execute(query)
+        await PostgresProvider.execute_transaction(query)
 
     @classmethod
     async def get_address_by_id(cls, address_id: str) -> List[Dict[str, Any]]:
