@@ -12,4 +12,4 @@ This project is created in terms of learning Fastapi in Python by creating onlin
 
 
 **Database Architecure**
-![plot](atyourservice-uml.png)
+![plot](atyourservice-database-architecture.png)

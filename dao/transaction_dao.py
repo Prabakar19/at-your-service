@@ -11,7 +11,6 @@ class TransactionDao(DbBase):
     transaction_id = Column(String, name='transaction_id', primary_key=True)
     billing_id = Column(String, name='billing_id')
     service_id = Column(String, name='service_id')
-    customer_id = Column(String, name='customer_id')
     transaction_time = Column(TIMESTAMP, name='transaction_time')
     transaction_amount = Column(Float, name='transaction_amount')
     original_cost = Column(Float, name='original_cost')
