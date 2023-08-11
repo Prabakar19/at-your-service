@@ -1,7 +1,7 @@
 from fastapi import APIRouter
 
 from model.customer import Customer
-from service.cutomer_serivce import CustomerService
+from service.customer_service import CustomerService
 
 router = APIRouter(
     prefix="/customer",
