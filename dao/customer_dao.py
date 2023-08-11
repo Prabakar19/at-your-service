@@ -2,7 +2,10 @@ from typing import Any, Dict, List
 
 import sqlalchemy as sa
 from sqlalchemy import Column, String, select
+from sqlalchemy.orm import relationship
 
+from dao.address_dao import AddressDao
+from dao.billing_dao import BillingDao
 from service.portgresql.postgres_provider import DbBase, PostgresProvider
 
 
@@ -16,7 +19,8 @@ class CustomerDao(DbBase):
     phone_number = Column(String, name='phone_number')
     password = Column(String, name='password')
 
-    # address = relationship('Address')
+    cust_address = relationship('AddressDao', order_by=AddressDao.address_id, back_populates='customer')
+    cust_billing = relationship('BillingDao', order_by=BillingDao.billing_id, back_populates='customer')
 
     @classmethod
     async def add_customer(cls, customer):

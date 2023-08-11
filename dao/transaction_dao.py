@@ -1,7 +1,8 @@
 from typing import Any, Dict, List
 
 import sqlalchemy as sa
-from sqlalchemy import Column, String, select, Float, Boolean, TIMESTAMP
+from sqlalchemy import Column, String, select, Float, Boolean, TIMESTAMP, ForeignKey
+from sqlalchemy.orm import relationship
 
 from service.portgresql.postgres_provider import DbBase, PostgresProvider
 
@@ -9,11 +10,14 @@ from service.portgresql.postgres_provider import DbBase, PostgresProvider
 class TransactionDao(DbBase):
     __tablename__ = 'transaction'
     transaction_id = Column(String, name='transaction_id', primary_key=True)
-    billing_id = Column(String, name='billing_id')
-    service_id = Column(String, name='service_id')
+    billing_id = Column(String, ForeignKey('billing.billing_id'), name='billing_id')
+    service_id = Column(String, ForeignKey('service.service_id'), name='service_id')
     transaction_time = Column(TIMESTAMP, name='transaction_time')
     transaction_amount = Column(Float, name='transaction_amount')
     original_cost = Column(Float, name='original_cost')
+
+    service = relationship('CustomerDao', back_populates='service_transaction')
+    billing = relationship('ServiceProviderDao', back_populates='billing_transaction')
 
     @classmethod
     async def add_transaction(cls, transaction):

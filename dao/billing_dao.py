@@ -1,8 +1,10 @@
 from typing import Any, Dict, List
 
 import sqlalchemy as sa
-from sqlalchemy import Column, String, select, Float
+from sqlalchemy import Column, String, select, Float, ForeignKey
+from sqlalchemy.orm import relationship
 
+from dao.transaction_dao import TransactionDao
 from service.portgresql.postgres_provider import DbBase, PostgresProvider
 
 
@@ -13,8 +15,13 @@ class BillingDao(DbBase):
     gst = Column(Float, name='gst')
     mrp_cost = Column(Float, name='mrp_cost')
     total_cost = Column(Float, name='total_cost')
-    customer_id = Column(String, name='customer_id')
-    service_provider_id = Column(String, name='service_provider_id')
+    customer_id = Column(String, ForeignKey('customer.customer_id'), name='customer_id')
+    service_provider_id = Column(String, ForeignKey('serviceprovider.service_provider_id'), name='service_provider_id')
+
+    customer = relationship('CustomerDao', back_populates='cust_billing')
+    service_provider = relationship('ServiceProviderDao', back_populates='sp_billing')
+
+    billing_transaction = relationship('TransactionDao', order_by=TransactionDao.service_id, back_populates='billing')
 
     @classmethod
     async def add_billing(cls, billing):

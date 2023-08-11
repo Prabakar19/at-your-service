@@ -1,8 +1,10 @@
 from typing import Any, Dict, List
 
 import sqlalchemy as sa
-from sqlalchemy import Column, String, select, Float, Boolean
+from sqlalchemy import Column, String, select, Float, Boolean, ForeignKey
+from sqlalchemy.orm import relationship
 
+from dao.transaction_dao import TransactionDao
 from service.portgresql.postgres_provider import DbBase, PostgresProvider
 
 
@@ -16,11 +18,16 @@ class ServiceDao(DbBase):
     discount_availability = Column(Boolean, name='discount_availability')
     details = Column(String, name='details')
     warranty = Column(Float, name='warranty')
-    service_provider_id = Column(String, name='service_provider_id')
-    category_id = Column(String, name='category_id')
+    service_provider_id = Column(String, ForeignKey('serviceprovider.service_provider_id'), name='service_provider_id')
+    category_id = Column(String, ForeignKey('category.category_id'), name='category_id')
     service_ratings = Column(Float, name='service_ratings')
     rating = Column(Float, name='rating')
     service_pic = Column(String, name='service_ratings')
+
+    category = relationship('CategoryDao', back_populates='cat_service')
+    service_provider = relationship('ServiceProviderDao', back_populates='sp_service')
+
+    service_transaction = relationship('TransactionDao', order_by=TransactionDao.service_id, back_populates='service')
 
     @classmethod
     async def add_service(cls, service):

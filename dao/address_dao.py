@@ -1,20 +1,26 @@
 from typing import Any, Dict, List
 
 import sqlalchemy as sa
-from sqlalchemy import Column, String, select
+from sqlalchemy import Column, String, select, ForeignKey
+from sqlalchemy.orm import relationship
 
 from service.portgresql.postgres_provider import DbBase, PostgresProvider
 
 
 class AddressDao(DbBase):
     __tablename__ = 'address'
-    address_id = Column(String, name='customer_id', primary_key=True)
+    address_id = Column(String, name='address_id', primary_key=True)
     house_address = Column(String, name='house_address')
     area = Column(String, name='area')
     city = Column(String, name='city')
     state = Column(String, name='state')
     country = Column(String, name='country')
     pincode = Column(String, name='pincode')
+    customer_id = Column(String, ForeignKey('customer.customer_id'), name='customer_id')
+    service_provider_id = Column(String, ForeignKey('serviceprovider.service_provider_id'), name='service_provider_id')
+
+    customer = relationship('CustomerDao', back_populates='cust_address')
+    service_provider = relationship('ServiceProviderDao', back_populates='sp_address')
 
     @classmethod
     async def add_address(cls, address):

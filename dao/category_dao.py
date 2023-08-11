@@ -2,7 +2,9 @@ from typing import Any, Dict, List
 
 import sqlalchemy as sa
 from sqlalchemy import Column, String, select
+from sqlalchemy.orm import relationship
 
+from dao.service_dao import ServiceDao
 from service.portgresql.postgres_provider import DbBase, PostgresProvider
 
 
@@ -11,6 +13,8 @@ class CategoryDao(DbBase):
     billing_id = Column(String, name='category_id', primary_key=True)
     category_name = Column(String, name='category_name')
     category_pic = Column(String, name='category_pic')
+
+    cat_service = relationship('ServiceDao', order_by=ServiceDao.service_id, back_populates='service')
 
     @classmethod
     async def add_category(cls, category):

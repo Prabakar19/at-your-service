@@ -2,7 +2,11 @@ from typing import Any, Dict, List
 
 import sqlalchemy as sa
 from sqlalchemy import Column, String, select, Float, Boolean
+from sqlalchemy.orm import relationship
 
+from dao.address_dao import AddressDao
+from dao.billing_dao import BillingDao
+from dao.service_dao import ServiceDao
 from service.portgresql.postgres_provider import DbBase, PostgresProvider
 
 
@@ -15,6 +19,10 @@ class ServiceProviderDao(DbBase):
     contact_number = Column(Float, name='contact_number')
     password = Column(Boolean, name='password')
     sp_rating = Column(String, name='sp_rating')
+
+    sp_address = relationship('AddressDao', order_by=AddressDao.address_id, back_populates='service_provider')
+    sp_service = relationship('ServiceDao', order_by=ServiceDao.service_id, back_populates='service_provider')
+    sp_billing = relationship('BillingDao', order_by=BillingDao.billing_id, back_populates='service_provider')
 
     @classmethod
     async def add_service_provider(cls, service_provider):
