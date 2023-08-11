@@ -1,3 +1,4 @@
+from typing import Optional
 from uuid import UUID
 
 from pydantic import BaseModel
@@ -11,3 +12,5 @@ class Address(BaseModel):
     state: str
     country: str
     pincode: int
+    customer_id: Optional[UUID] = None
+    service_provider_id: Optional[UUID] = None

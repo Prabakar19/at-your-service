@@ -9,7 +9,11 @@ class CustomerService:
         return customer
 
     async def add_customer(self, customer: Customer):
-        await CustomerDao.add_customer(customer)
+        customer = customer.model_dump()
+        cust_address = customer.pop('address', None)
+        cust_address['customer_id'] = customer['customer_id']
+
+        await CustomerDao.add_customer(customer, cust_address)
 
 
     async def update_customer(self, customer: Customer):

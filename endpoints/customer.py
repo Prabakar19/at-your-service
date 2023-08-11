@@ -16,7 +16,6 @@ async def get_customer(customer_id: str):
     return await customer_service.get_customer(customer_id)
 
 
-# TODO: fix add customer
 @router.post("/")
 async def add_customer(customer: Customer):
     customer_service = CustomerService()

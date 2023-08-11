@@ -23,9 +23,13 @@ class CustomerDao(DbBase):
     cust_billing = relationship('BillingDao', order_by=BillingDao.billing_id, back_populates='customer')
 
     @classmethod
-    async def add_customer(cls, customer):
-        query = [sa.insert(CustomerDao).values(customer.dict())]
+    async def add_customer(cls, customer: Dict[str, Any], cust_address: Dict[str, Any]):
+        query = [sa.insert(CustomerDao).values(customer)]
         await PostgresProvider.execute_transaction(query)
+
+        if cust_address:
+            query = [sa.insert(AddressDao).values(cust_address)]
+            await PostgresProvider.execute_transaction(query)
 
     @classmethod
     async def get_customer_by_name(cls, customer_name: str) -> List[Dict[str, Any]]:

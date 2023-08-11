@@ -14,5 +14,5 @@ class Customer(BaseModel):
     email_id: str
     phone_number: str
     password: str
-    # address: Optional[Address]
+    address: Optional[Address]
 
