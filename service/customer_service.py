@@ -1,3 +1,5 @@
+import uuid
+
 from dao.customer_dao import CustomerDao
 from model.customer import Customer
 

@@ -1,11 +1,11 @@
 from typing import Optional
-from uuid import UUID
+from uuid import UUID, uuid4
 
 from pydantic import BaseModel
 
 
 class Address(BaseModel):
-    address_id: UUID
+    address_id: UUID = uuid4()
     house_address: str
     area: str
     city: str

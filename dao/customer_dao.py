@@ -24,7 +24,7 @@ class CustomerDao(DbBase):
 
     @classmethod
     async def add_customer(cls, customer: Dict[str, Any], cust_address: Dict[str, Any]):
-        query = [sa.insert(CustomerDao).values(customer)]
+        query = [sa.insert(cls).values(customer)]
         await PostgresProvider.execute_transaction(query)
 
         if cust_address:
@@ -33,20 +33,20 @@ class CustomerDao(DbBase):
 
     @classmethod
     async def get_customer_by_name(cls, customer_name: str) -> List[Dict[str, Any]]:
-        query = select(CustomerDao).where(cls.customer_name == customer_name)
+        query = select(cls).where(cls.customer_name == customer_name)
         return await PostgresProvider.execute(query)
 
     @classmethod
     async def get_customer_by_id(cls, customer_id: str) -> List[Dict[str, Any]]:
-        query = select(CustomerDao).where(cls.customer_id == customer_id)
+        query = select(cls).where(cls.customer_id == customer_id)
         return await PostgresProvider.get_list(query)
 
     @classmethod
     async def get_all_customer(cls) -> List[Dict[str, Any]]:
-        query = select(CustomerDao)
+        query = select(cls)
         return await PostgresProvider.execute(query)
 
     @classmethod
     async def update_customer(cls, customer):
-        query = [sa.update(CustomerDao).where(cls.name == customer['name']).values(customer)]
+        query = [sa.update(cls).where(cls.name == customer['name']).values(customer)]
         await PostgresProvider.execute(query)
