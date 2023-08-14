@@ -43,6 +43,6 @@ class AddressDao(DbBase):
         return await PostgresProvider.get_list(query)
 
     @classmethod
-    async def update_address(cls, address):
-        query = [sa.update(cls).where(cls.name == address['address_id']).values(address)]
-        await PostgresProvider.execute(query)
+    async def update_address(cls, address: Dict[str, Any]):
+        query = [sa.update(cls).where(cls.address_id == address['address_id']).values(address)]
+        await PostgresProvider.execute_transaction(query)

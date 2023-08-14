@@ -47,6 +47,6 @@ class CustomerDao(DbBase):
         return await PostgresProvider.execute(query)
 
     @classmethod
-    async def update_customer(cls, customer):
-        query = [sa.update(cls).where(cls.name == customer['name']).values(customer)]
-        await PostgresProvider.execute(query)
+    async def update_customer(cls, customer: Dict[str, Any]):
+        query = [sa.update(cls).where(cls.customer_id == customer['customer_id']).values(customer)]
+        await PostgresProvider.execute_transaction(query)

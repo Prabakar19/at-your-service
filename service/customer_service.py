@@ -1,7 +1,6 @@
-import uuid
-
 from dao.customer_dao import CustomerDao
 from model.customer import Customer
+from service.address_service import AddressService
 
 
 class CustomerService:
@@ -17,6 +16,10 @@ class CustomerService:
 
         await CustomerDao.add_customer(customer, cust_address)
 
-
     async def update_customer(self, customer: Customer):
+        customer = customer.model_dump()
+        cust_address = customer.pop('address', None)
         await CustomerDao.update_customer(customer)
+        if cust_address:
+            cust_address['customer_id'] = customer['customer_id']
+            await AddressService().update_address(cust_address)

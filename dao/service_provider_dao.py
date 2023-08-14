@@ -47,4 +47,4 @@ class ServiceProviderDao(DbBase):
     async def update_service_provider(cls, service_provider):
         query = [sa.update(cls).where(cls.service_provider_id == service_provider['service_provider_id'])
                  .values(service_provider)]
-        await PostgresProvider.execute(query)
+        await PostgresProvider.execute_transaction(query)
