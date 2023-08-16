@@ -24,10 +24,10 @@ class ServiceDao(DbBase):
     rating = Column(Float, name='rating')
     service_pic = Column(String, name='service_ratings')
 
-    category = relationship('CategoryDao', back_populates='cat_service')
-    service_provider = relationship('ServiceProviderDao', back_populates='sp_service')
-
-    service_transaction = relationship('TransactionDao', order_by=TransactionDao.service_id, back_populates='service')
+    # TODO: fix this relationship issue of CategoryDao not locate
+    # service_cat = relationship('CategoryDao', back_populates='cat_service')
+    service_sp = relationship('ServiceProviderDao', back_populates='sp_service')
+    service_transaction = relationship('TransactionDao', order_by=TransactionDao.service_id, back_populates='transaction_service')
 
     @classmethod
     async def add_service(cls, service):

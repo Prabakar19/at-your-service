@@ -14,6 +14,7 @@ class ServiceProviderService:
         service_provider_address = service_provider.pop('address', None)
         service_provider_address['service_provider_id'] = service_provider['service_provider_id']
 
+        # TODO: add encryption logic to encrypt password
         await ServiceProviderDao.add_service_provider(service_provider, service_provider_address)
 
     async def update_service_provider(self, service_provider: ServiceProvider):

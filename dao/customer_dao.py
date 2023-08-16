@@ -19,8 +19,8 @@ class CustomerDao(DbBase):
     phone_number = Column(String, name='phone_number')
     password = Column(String, name='password')
 
-    cust_address = relationship('AddressDao', order_by=AddressDao.address_id, back_populates='customer')
-    cust_billing = relationship('BillingDao', order_by=BillingDao.billing_id, back_populates='customer')
+    cust_address = relationship('AddressDao', order_by=AddressDao.address_id, back_populates='address_cust')
+    cust_billing = relationship('BillingDao', order_by=BillingDao.billing_id, back_populates='billing_cust')
 
     @classmethod
     async def add_customer(cls, customer: Dict[str, Any], cust_address: Dict[str, Any]):
@@ -32,9 +32,10 @@ class CustomerDao(DbBase):
             await PostgresProvider.execute_transaction(query)
 
     @classmethod
-    async def get_customer_by_name(cls, customer_name: str) -> List[Dict[str, Any]]:
-        query = select(cls).where(cls.customer_name == customer_name)
-        return await PostgresProvider.execute(query)
+    async def get_customer_by_email(cls, email_id: str) -> Dict[str, Any]:
+        query = select(cls).where(cls.email_id == email_id)
+        customer = await PostgresProvider.get_list(query)
+        return customer[0] if customer else None
 
     @classmethod
     async def get_customer_by_id(cls, customer_id: str) -> List[Dict[str, Any]]:

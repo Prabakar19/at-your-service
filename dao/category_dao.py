@@ -14,7 +14,7 @@ class CategoryDao(DbBase):
     category_name = Column(String, name='category_name')
     category_pic = Column(String, name='category_pic')
 
-    cat_service = relationship('ServiceDao', order_by=ServiceDao.service_id, back_populates='service')
+    # cat_service = relationship('ServiceDao', order_by=ServiceDao.service_id, back_populates='service_cat')
 
     @classmethod
     async def add_category(cls, category):

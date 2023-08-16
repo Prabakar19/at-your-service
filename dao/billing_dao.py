@@ -18,10 +18,10 @@ class BillingDao(DbBase):
     customer_id = Column(String, ForeignKey('customer.customer_id'), name='customer_id')
     service_provider_id = Column(String, ForeignKey('serviceprovider.service_provider_id'), name='service_provider_id')
 
-    customer = relationship('CustomerDao', back_populates='cust_billing')
-    service_provider = relationship('ServiceProviderDao', back_populates='sp_billing')
+    billing_cust = relationship('CustomerDao', back_populates='cust_billing')
+    billing_sp = relationship('ServiceProviderDao', back_populates='sp_billing')
 
-    billing_transaction = relationship('TransactionDao', order_by=TransactionDao.service_id, back_populates='billing')
+    billing_transaction = relationship('TransactionDao', order_by=TransactionDao.service_id, back_populates='transaction_billing')
 
     @classmethod
     async def add_billing(cls, billing):

@@ -20,9 +20,9 @@ class ServiceProviderDao(DbBase):
     password = Column(String, name='password')
     sp_rating = Column(Float, name='sp_rating')
 
-    sp_address = relationship('AddressDao', order_by=AddressDao.address_id, back_populates='service_provider')
-    sp_service = relationship('ServiceDao', order_by=ServiceDao.service_id, back_populates='service_provider')
-    sp_billing = relationship('BillingDao', order_by=BillingDao.billing_id, back_populates='service_provider')
+    sp_address = relationship('AddressDao', order_by=AddressDao.address_id, back_populates='address_sp')
+    sp_service = relationship('ServiceDao', order_by=ServiceDao.service_id, back_populates='service_sp')
+    sp_billing = relationship('BillingDao', order_by=BillingDao.billing_id, back_populates='billing_sp')
 
     @classmethod
     async def add_service_provider(cls, service_provider, address):

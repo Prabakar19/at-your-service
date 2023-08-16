@@ -19,8 +19,8 @@ class AddressDao(DbBase):
     customer_id = Column(String, ForeignKey('customer.customer_id'), name='customer_id')
     service_provider_id = Column(String, ForeignKey('serviceprovider.service_provider_id'), name='service_provider_id')
 
-    customer = relationship('CustomerDao', back_populates='cust_address')
-    service_provider = relationship('ServiceProviderDao', back_populates='sp_address')
+    address_cust = relationship('CustomerDao', back_populates='cust_address')
+    address_sp = relationship('ServiceProviderDao', back_populates='sp_address')
 
     @classmethod
     async def add_address(cls, address):

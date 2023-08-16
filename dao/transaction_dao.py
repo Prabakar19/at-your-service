@@ -16,8 +16,8 @@ class TransactionDao(DbBase):
     transaction_amount = Column(Float, name='transaction_amount')
     original_cost = Column(Float, name='original_cost')
 
-    service = relationship('CustomerDao', back_populates='service_transaction')
-    billing = relationship('ServiceProviderDao', back_populates='billing_transaction')
+    transaction_service = relationship('ServiceDao', back_populates='service_transaction')
+    transaction_billing = relationship('BillingDao', back_populates='billing_transaction')
 
     @classmethod
     async def add_transaction(cls, transaction):
