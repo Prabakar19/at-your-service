@@ -39,9 +39,10 @@ class ServiceProviderDao(DbBase):
         return await PostgresProvider.get_list(query)
 
     @classmethod
-    async def get_service_provider_by_name(cls, company_name: str) -> List[Dict[str, Any]]:
-        query = select(cls).where(cls.company_name == company_name)
-        return await PostgresProvider.get_list(query)
+    async def get_service_provider_by_email(cls, email_id: str) -> Dict[str, Any]:
+        query = select(cls).where(cls.email_id == email_id)
+        sp = await PostgresProvider.get_list(query)
+        return sp[0] if sp else None
 
     @classmethod
     async def update_service_provider(cls, service_provider):

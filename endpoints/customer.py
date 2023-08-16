@@ -33,7 +33,7 @@ async def update_customer(customer: Customer):
 
 
 @router.post("/login")
-async def get_customer(login_details: Dict[str, str]):
+async def login_customer(login_details: Dict[str, str]):
     customer_service = CustomerService()
     customer_details = await customer_service.customer_login(login_details)
-    return customer_details if customer_details else {'data': 'No customer found'}
+    return customer_details if customer_details else {'data': 'Customer not found'}

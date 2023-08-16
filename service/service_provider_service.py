@@ -1,3 +1,5 @@
+from typing import Dict
+
 from dao.service_provider_dao import ServiceProviderDao
 from model.service_provider import ServiceProvider
 from service.address_service import AddressService
@@ -25,3 +27,12 @@ class ServiceProviderService:
         if service_provider_address:
             service_provider_address['service_provider_id'] = service_provider['service_provider_id']
             await AddressService().update_address(service_provider_address)
+
+    async def service_provider_login(self, login_details: Dict[str, str]):
+        sp = await ServiceProviderDao.get_service_provider_by_email(login_details['email_id'])
+        if sp:
+            password = sp.get('password')
+            if password == login_details['password']:
+                return sp
+
+        return None

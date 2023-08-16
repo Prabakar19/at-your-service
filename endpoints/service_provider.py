@@ -1,3 +1,5 @@
+from typing import Dict
+
 from fastapi import APIRouter
 
 from model.customer import Customer
@@ -30,3 +32,10 @@ async def update_service_provider(service_provider: ServiceProvider):
     service_provider_service = ServiceProviderService()
     await service_provider_service.update_service_provider(service_provider)
     return {'data': 'Service Provider details updated successfully'}
+
+
+@router.post("/login")
+async def login_service_provider(login_details: Dict[str, str]):
+    service_provider_service = ServiceProviderService()
+    sp_details = await service_provider_service.service_provider_login(login_details)
+    return sp_details if sp_details else {'data': 'Service Provider not found'}
