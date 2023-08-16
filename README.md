@@ -1,5 +1,5 @@
 # at-your-service
-Online Service platform using Python FastApi.
+Online Service platform using Python FastApi
 
 This project is created in terms of learning Fastapi in Python by creating online home services such as Urban Clap.
 
