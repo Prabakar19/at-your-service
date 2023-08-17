@@ -11,6 +11,7 @@ router = APIRouter(
     responses={404: {"description": "Not found"}},
 )
 
+# TODO: add password reset api
 
 @router.get("/{customer_id}")
 async def get_customer(customer_id: str):
