@@ -1,16 +1,18 @@
 import uvicorn
 from fastapi import FastAPI
 
-from endpoints import customer
+from endpoints import customer, category
 from endpoints import service_provider
 
 
 def get_application() -> FastAPI:
+    prefix = '/api'
     """ Configure, start and return the application """
     application = FastAPI()
 
-    application.include_router(customer.router)
-    application.include_router(service_provider.router)
+    application.include_router(prefix=prefix, router=customer.router)
+    application.include_router(prefix=prefix, router=service_provider.router)
+    application.include_router(prefix=prefix, router=category.router)
     return application
 
 

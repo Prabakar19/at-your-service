@@ -1,12 +1,11 @@
-from typing import Any, List
 from uuid import UUID
+
 from pydantic import BaseModel
 
-from model.service import Service
+from utils.id_generator import IdGenerator
 
 
 class Category(BaseModel):
-    category_id: UUID
+    category_id: UUID = IdGenerator.generate_uuid() # fix random id generator
     category_name: str
-    category_pic: Any  # TODO: find datatype for all the picture variable
-    services: List[Service]
+    category_pic: str = ''  # TODO: find datatype for all the picture variable

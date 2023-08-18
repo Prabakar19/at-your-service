@@ -22,7 +22,7 @@ class ServiceDao(DbBase):
     category_id = Column(String, ForeignKey('category.category_id'), name='category_id')
     service_ratings = Column(Float, name='service_ratings')
     rating = Column(Float, name='rating')
-    service_pic = Column(String, name='service_ratings')
+    service_pic = Column(String, name='service_pic')
 
     # TODO: fix this relationship issue of CategoryDao not locate
     # service_cat = relationship('CategoryDao', back_populates='cat_service')

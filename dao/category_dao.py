@@ -22,14 +22,22 @@ class CategoryDao(DbBase):
         await PostgresProvider.execute_transaction(query)
 
     @classmethod
-    async def get_category_by_id(cls, category_id: str) -> List[Dict[str, Any]]:
+    async def get_category_by_id(cls, category_id: str) -> Dict[str, Any]:
         query = select(cls).where(cls.category_id == category_id)
-        return await PostgresProvider.get_list(query)
+        cat = await PostgresProvider.get_list(query)
+        return cat[0] if cat else None
 
     @classmethod
-    async def get_category_name(cls, category_name: str) -> List[Dict[str, Any]]:
+    async def get_category_name(cls, category_name: str) -> Dict[str, Any]:
         query = select(cls).where(cls.category_name == category_name)
-        return await PostgresProvider.get_list(query)
+        cat = await PostgresProvider.get_list(query)
+        return cat[0] if cat else None
+
+    @classmethod
+    async def get_all_categories(cls) -> List[Dict[str, Any]]:
+        query = select(cls)
+        categories = await PostgresProvider.get_list(query)
+        return categories
 
     @classmethod
     async def update_category(cls, category):
