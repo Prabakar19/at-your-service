@@ -45,6 +45,12 @@ class ServiceProviderDao(DbBase):
         return sp[0] if sp else None
 
     @classmethod
+    async def get_all_sp_cities(cls) -> List[Dict[str, str]]:
+        query = select(AddressDao.city).join(cls.sp_address).order_by(cls.service_provider_id, AddressDao.service_provider_id)
+        city_list = await PostgresProvider.get_list(query)
+        return city_list
+
+    @classmethod
     async def update_service_provider(cls, service_provider):
         query = [sa.update(cls).where(cls.service_provider_id == service_provider['service_provider_id'])
                  .values(service_provider)]

@@ -1,4 +1,4 @@
-from typing import Dict
+from typing import Dict, List, Set
 
 from dao.service_provider_dao import ServiceProviderDao
 from model.service_provider import ServiceProvider
@@ -36,3 +36,8 @@ class ServiceProviderService:
                 return sp
 
         return None
+
+    async def get_sp_cities(self) -> Set[str]:
+        cities = await ServiceProviderDao.get_all_sp_cities()
+        cities = [city['city'] for city in cities]
+        return set(cities)

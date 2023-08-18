@@ -28,7 +28,7 @@ class CustomerService:
             await AddressService().update_address(cust_address)
 
     async def customer_login(self, login_details: Dict[str, str]):
-        customer = await CustomerDao.get_customer_by_email(login_details['email_id'])
+        customer = await CustomerDao.get_customer_by_email(login_details['emailId'])
         if customer:
             password = customer.get('password')
             if password == login_details['password']:
