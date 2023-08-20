@@ -18,3 +18,5 @@ foreign key (category_id) references atyourservice.category(category_id)
 
 alter table atyourservice.service add constraint fk_service_serviceprovider
 foreign key (service_provider_id) references atyourservice.serviceprovider(service_provider_id)
+
+alter table atyourservice.atyourservice.service add column service_name varchar(100);
