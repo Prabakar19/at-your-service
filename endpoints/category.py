@@ -24,6 +24,12 @@ async def get_all_category():
     return await customer_service.get_all_categories()
 
 
+@router.get("/all/{city_name}")
+async def get_all_category_by_city(city_name: str):
+    customer_service = CategoryService()
+    return await customer_service.get_all_categories_by_city(city_name)
+
+
 @router.get("/{category_id}")
 async def get_category(category_id: str):
     customer_service = CategoryService()

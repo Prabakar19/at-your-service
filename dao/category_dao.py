@@ -10,7 +10,7 @@ from service.portgresql.postgres_provider import DbBase, PostgresProvider
 
 class CategoryDao(DbBase):
     __tablename__ = 'category'
-    billing_id = Column(String, name='category_id', primary_key=True)
+    category_id = Column(String, name='category_id', primary_key=True)
     category_name = Column(String, name='category_name')
     category_pic = Column(String, name='category_pic')
 
@@ -28,7 +28,12 @@ class CategoryDao(DbBase):
         return cat[0] if cat else None
 
     @classmethod
-    async def get_category_name(cls, category_name: str) -> Dict[str, Any]:
+    async def get_category_name_by_ids(cls, category_ids: List[str]) -> List[Dict[str, Any]]:
+        query = select(cls.category_name).where(cls.category_id.in_(category_ids))
+        return await PostgresProvider.get_list(query)
+
+    @classmethod
+    async def get_category_by_name(cls, category_name: str) -> Dict[str, Any]:
         query = select(cls).where(cls.category_name == category_name)
         cat = await PostgresProvider.get_list(query)
         return cat[0] if cat else None
