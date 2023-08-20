@@ -39,5 +39,5 @@ class ServiceProviderService:
 
     async def get_sp_cities(self) -> Set[str]:
         cities = await ServiceProviderDao.get_all_sp_cities()
-        cities = [city['city'] for city in cities]
-        return set(cities)
+        cities = set(city['city'] for city in cities)
+        return cities

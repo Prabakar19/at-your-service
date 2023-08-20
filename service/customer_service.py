@@ -1,4 +1,4 @@
-from typing import Dict
+from typing import Dict, Any
 
 from dao.customer_dao import CustomerDao
 from model.customer import Customer
@@ -32,6 +32,17 @@ class CustomerService:
         if customer:
             password = customer.get('password')
             if password == login_details['password']:
-                return customer
+                return self.transform_cust(customer)
 
         return None
+
+    @staticmethod
+    def transform_cust(customer: Dict[str, Any]):
+        customer['customerId'] = customer.pop('customer_id')
+        customer['customerName'] = customer.pop('customer_name')
+        customer['firstName'] = customer.pop('first_name')
+        customer['lastName'] = customer.pop('last_name')
+        customer['emailId'] = customer.pop('email_id')
+        customer['phoneNum'] = customer.pop('phone_number')
+        customer['password'] = customer.pop('password')
+        return customer
