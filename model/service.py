@@ -2,10 +2,11 @@ from typing import Any, List
 from uuid import UUID
 from pydantic import BaseModel
 from model.transaction import Transaction
+from utils.id_generator import IdGenerator
 
 
 class Service(BaseModel):
-    service_id: UUID
+    service_id: UUID = IdGenerator.generate_uuid()
     service_name: str
     cost: float
     discount: float
@@ -17,5 +18,5 @@ class Service(BaseModel):
     category_id: UUID
     service_ratings: float
     rating: float
-    service_pic: Any  # TODO: find datatype for all the picture variable
-    transactions: List[Transaction]  # TODO: change any
+    service_pic: Any = ''  # TODO: find datatype for all the picture variable
+    # transactions: List[Transaction]  # TODO: change any
