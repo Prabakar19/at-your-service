@@ -36,7 +36,7 @@ async def get_category(category_id: str):
     return await customer_service.get_category_by_id(category_id)
 
 
-@router.get("/{customer_name}")
-async def get_category(customer_name: str):
+@router.get("/name/{category_name}")
+async def get_category_by_name(category_name: str):
     customer_service = CategoryService()
-    return await customer_service.get_category_by_name(customer_name)
+    return await customer_service.get_category_by_name(category_name)

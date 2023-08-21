@@ -13,8 +13,8 @@ class CategoryService:
         await CategoryDao.add_category(category.model_dump())
 
     async def get_category_by_name(self, cat_name: str):
-        category = await CategoryDao.get_category_name(cat_name)
-        return category if category else {'data': 'Category not Found'}
+        category = await CategoryDao.get_category_by_name(cat_name)
+        return self.transform_category(category) if category else {'data': 'Category not Found'}
 
     async def get_category_by_id(self, cat_id: str):
         category = await CategoryDao.get_category_by_id(cat_id)

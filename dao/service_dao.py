@@ -20,9 +20,10 @@ class ServiceDao(DbBase):
     warranty = Column(Float, name='warranty')
     service_provider_id = Column(String, ForeignKey('serviceprovider.service_provider_id'), name='service_provider_id')
     category_id = Column(String, ForeignKey('category.category_id'), name='category_id')
-    service_ratings = Column(Float, name='service_ratings')
     rating = Column(Float, name='rating')
     service_pic = Column(String, name='service_pic')
+    city = Column(String, name='city')
+    short_description = Column(String, name='short_description')
 
     # TODO: fix this relationship issue of CategoryDao not locate
     # service_cat = relationship('CategoryDao', back_populates='cat_service')
@@ -57,6 +58,11 @@ class ServiceDao(DbBase):
     @classmethod
     async def get_category_list_by_sp_ids(cls, sp_ids: List[str]):
         query = select(cls.category_id).where(cls.service_provider_id.in_(sp_ids))
+        return await PostgresProvider.get_list(query)
+
+    @classmethod
+    async def get_services_by_cat_and_location(cls, cat_id: str, city: str):
+        query = select(cls).where(cls.category_id == cat_id).where(cls.city == city)
         return await PostgresProvider.get_list(query)
 
     @classmethod

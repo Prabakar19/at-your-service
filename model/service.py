@@ -16,7 +16,8 @@ class Service(BaseModel):
     warranty: float
     service_provider_id: UUID
     category_id: UUID
-    service_ratings: float
     rating: float
+    city: str
+    short_description: str
     service_pic: Any = ''  # TODO: find datatype for all the picture variable
     # transactions: List[Transaction]  # TODO: change any
