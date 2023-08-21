@@ -9,7 +9,7 @@ class ServiceProviderService:
 
     async def get_service_provider(self, service_provider_id: str):
         service_provider = await ServiceProviderDao.get_service_provider_by_id(service_provider_id)
-        return service_provider
+        return self.transform_sp(service_provider)
 
     async def add_service_provider(self, service_provider: ServiceProvider):
         service_provider = service_provider.model_dump()
@@ -41,3 +41,13 @@ class ServiceProviderService:
         cities = await ServiceProviderDao.get_all_sp_cities()
         cities = set(city['city'] for city in cities)
         return cities
+
+    @staticmethod
+    def transform_sp(service_provider):
+        service_provider['serviceProviderId'] = service_provider.pop('service_provider_id')
+        service_provider['companyName'] = service_provider.pop('company_name')
+        service_provider['ownerName'] = service_provider.pop('owner_name')
+        service_provider['emailId'] = service_provider.pop('email_id')
+        service_provider['phoneNum'] = service_provider.pop('contact_number')
+        service_provider['spRating'] = service_provider.pop('sp_rating')
+        return service_provider
