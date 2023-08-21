@@ -20,3 +20,6 @@ alter table atyourservice.service add constraint fk_service_serviceprovider
 foreign key (service_provider_id) references atyourservice.serviceprovider(service_provider_id)
 
 alter table atyourservice.atyourservice.service add column service_name varchar(100);
+alter table atyourservice.atyourservice.service add column city varchar(50);
+alter table atyourservice.atyourservice.service drop column service_ratings;
+alter table atyourservice.atyourservice.service add column short_description varchar(100);
