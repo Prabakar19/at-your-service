@@ -3,6 +3,7 @@ from typing import Any, Dict, List
 
 from dao.cart_dao import CartDao
 from dao.service_dao import ServiceDao
+from service.service import ServiceService
 
 
 class CartService:
@@ -23,6 +24,9 @@ class CartService:
 
         service_ids = [item['service_id'] for item in cart_list]
         service_list = await ServiceDao.get_service_list_by_ids(service_ids)
+        for service in service_list:
+            ServiceService.transform_services(service)
+
         return service_list
 
     async def remove_service(self, customer_id: str, service_id: str):
