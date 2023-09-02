@@ -13,3 +13,5 @@ foreign key (service_id) references atyourservice.service(service_id)
 
 alter table atyourservice.transaction add constraint fk_transaction_billing
 foreign key (billing_id) references atyourservice.billing(billing_id)
+
+alter table atyourservice.transaction add column status varchar(20);
