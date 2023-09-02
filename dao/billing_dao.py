@@ -27,11 +27,13 @@ class BillingDao(DbBase):
     async def add_billing(cls, billing):
         query = [sa.insert(cls).values(billing)]
         await PostgresProvider.execute_transaction(query)
+        return await cls.get_billing_by_id(billing['billing_id'])
 
     @classmethod
-    async def get_billing_by_id(cls, billing_id: str) -> List[Dict[str, Any]]:
+    async def get_billing_by_id(cls, billing_id: str) -> Dict[str, Any]:
         query = select(cls).where(cls.billing_id == billing_id)
-        return await PostgresProvider.get_list(query)
+        billing = await PostgresProvider.get_list(query)
+        return billing[0] if billing else None
 
     @classmethod
     async def get_billing_by_customer_id(cls, customer_id: str) -> List[Dict[str, Any]]:

@@ -1,4 +1,8 @@
+from typing import Dict, Any
+
 from fastapi import APIRouter
+
+from service.billing_service import BillingService
 
 router = APIRouter(
     prefix="/billing",
@@ -7,6 +11,8 @@ router = APIRouter(
 )
 
 
-@router.post("/")
-async def add_billing(billing):
-    pass
+@router.post("")
+async def add_billing(billing: Dict[str, Any]):
+    billing_service = BillingService()
+    return await billing_service.add_billing(billing)
+
