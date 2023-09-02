@@ -41,6 +41,11 @@ class ServiceDao(DbBase):
         return await PostgresProvider.get_list(query)
 
     @classmethod
+    async def get_service_list_by_ids(cls, service_ids: List[str]) -> List[Dict[str, Any]]:
+        query = select(cls).where(cls.service_id.in_(service_ids))
+        return await PostgresProvider.get_list(query)
+
+    @classmethod
     async def get_service_by_service_provider_id(cls, service_provider_id: str) -> List[Dict[str, Any]]:
         query = select(cls).where(cls.service_provider_id == service_provider_id)
         return await PostgresProvider.get_list(query)
