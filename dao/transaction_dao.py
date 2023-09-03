@@ -15,6 +15,7 @@ class TransactionDao(DbBase):
     transaction_time = Column(TIMESTAMP, name='transaction_time')
     transaction_amount = Column(Float, name='transaction_amount')
     original_cost = Column(Float, name='original_cost')
+    transaction_rating = Column(Float, name='transaction_rating')
     status = Column(String, name='status')
 
     transaction_service = relationship('ServiceDao', back_populates='service_transaction')
@@ -36,8 +37,8 @@ class TransactionDao(DbBase):
         return await PostgresProvider.get_list(query)
 
     @classmethod
-    async def get_transaction_by_billing_id(cls, billing_id: str) -> List[Dict[str, Any]]:
-        query = select(cls).where(cls.billing_id == billing_id)
+    async def get_transaction_by_billing_ids(cls, billing_ids: List[str]) -> List[Dict[str, Any]]:
+        query = select(cls).where(cls.billing_id.in_(billing_ids))
         return await PostgresProvider.get_list(query)
 
     @classmethod
