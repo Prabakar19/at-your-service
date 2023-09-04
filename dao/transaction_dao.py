@@ -32,9 +32,10 @@ class TransactionDao(DbBase):
         await PostgresProvider.execute_transaction(query)
 
     @classmethod
-    async def get_transaction_by_id(cls, transaction_id: str) -> List[Dict[str, Any]]:
+    async def get_transaction_by_id(cls, transaction_id: str) -> Dict[str, Any]:
         query = select(cls).where(cls.transaction_id == transaction_id)
-        return await PostgresProvider.get_list(query)
+        txn = await PostgresProvider.get_list(query)
+        return txn[0] if txn else None
 
     @classmethod
     async def get_transaction_by_billing_ids(cls, billing_ids: List[str]) -> List[Dict[str, Any]]:
@@ -50,6 +51,12 @@ class TransactionDao(DbBase):
     async def get_transaction_by_customer_id(cls, customer_id: str) -> List[Dict[str, Any]]:
         query = select(cls).where(cls.customer_id == customer_id)
         return await PostgresProvider.get_list(query)
+
+    @classmethod
+    async def update_rating(cls, transaction_id: str, rating: int):
+        query = [sa.update(cls).where(cls.transaction_id == transaction_id).values({'transaction_rating': rating})]
+        await PostgresProvider.execute_transaction(query)
+        return await cls.get_transaction_by_id(transaction_id)
 
     @classmethod
     async def update_transaction(cls, transaction):

@@ -27,6 +27,20 @@ class TransactionService:
 
         return transaction_list
 
+    async def update_rating(self, transaction_id: str, rating: Dict[str, any]):
+        txn = await TransactionDao.update_rating(transaction_id, rating['rating'])
+        service_txns = await TransactionDao.get_transaction_by_service_id(txn['service_id'])
+        total_rating = valid_count = 0
+        for txn in service_txns:
+            if txn['transaction_rating']:
+                total_rating += txn['transaction_rating']
+                valid_count += 1
+
+        total_rating = total_rating/valid_count
+        await ServiceDao.update_rating(txn['service_id'], total_rating)
+        self.transform_transaction_for_ui(txn)
+        return txn
+
     @staticmethod
     def transform_transaction_for_ui(transaction: Dict[str, Any]):
         transaction['transactionId'] = transaction.pop('transaction_id')
