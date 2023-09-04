@@ -25,8 +25,8 @@ async def get_all_cust_transaction(customer_id: str):
     return await transaction_service.get_all_cust_transaction(customer_id)
 
 
-# @router.put("/rating/{transaction_id}/{rating}")
-# async def get_all_cust_transaction(transaction_id: str, rating: int):
-#     transaction_service = TransactionService()
-#     return await transaction_service.get_all_cust_transaction(transaction_id)
+@router.put("/rating/{transaction_id}")
+async def get_all_cust_transaction(transaction_id: str, rating: Dict[str, Any]):
+    transaction_service = TransactionService()
+    return await transaction_service.update_rating(transaction_id, rating)
 
