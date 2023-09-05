@@ -13,3 +13,18 @@ class AddressService:
     async def update_address(self, address: Dict[str, Any]):
         await AddressDao.update_address(address)
 
+    async def get_customer_address(self, customer_id: str):
+        customer_address = await AddressDao.get_address_by_customer_id(customer_id)
+        customer_address = self.change_dict_for_ui(customer_address)
+        customer_address.pop('serviceProviderId', None)
+        return customer_address
+
+    @staticmethod
+    def change_dict_for_ui(address: dict[str, any]):
+        address['addressId'] = address.pop('address_id')
+        address['houseAddress'] = address.pop('house_address')
+        address['serviceProviderId'] = address.pop('service_provider_id')
+        address['customerId'] = address.pop('customer_id')
+        return address
+
+

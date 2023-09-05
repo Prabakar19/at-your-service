@@ -33,9 +33,10 @@ class AddressDao(DbBase):
         return await PostgresProvider.get_list(query)
 
     @classmethod
-    async def get_address_by_customer_id(cls, customer_id: str) -> List[Dict[str, Any]]:
+    async def get_address_by_customer_id(cls, customer_id: str) -> Dict[str, Any]:
         query = select(cls).where(cls.customer_id == customer_id)
-        return await PostgresProvider.get_list(query)
+        address = await PostgresProvider.get_list(query)
+        return address[0] if address else None
 
     @classmethod
     async def get_address_by_service_provider_id(cls, service_provider_id: str) -> List[Dict[str, Any]]:

@@ -1,5 +1,6 @@
 from typing import Dict, Any
 
+from dao.address_dao import AddressDao
 from dao.customer_dao import CustomerDao
 from model.customer import Customer
 from service.address_service import AddressService

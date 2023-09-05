@@ -3,6 +3,7 @@ from typing import Dict
 from fastapi import APIRouter
 
 from model.customer import Customer
+from service.address_service import AddressService
 from service.customer_service import CustomerService
 
 router = APIRouter(
@@ -12,6 +13,7 @@ router = APIRouter(
 )
 
 # TODO: add password reset api
+
 
 @router.get("/{customer_id}")
 async def get_customer(customer_id: str):
@@ -38,3 +40,9 @@ async def login_customer(login_details: Dict[str, str]):
     customer_service = CustomerService()
     customer_details = await customer_service.customer_login(login_details)
     return customer_details if customer_details else {'data': 'Customer not found'}
+
+
+@router.get("/address/{customer_id}")
+async def get_customer_address(customer_id: str):
+    addr_service = AddressService()
+    return await addr_service.get_customer_address(customer_id)
