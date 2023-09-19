@@ -2,9 +2,7 @@ from typing import Dict
 
 from fastapi import APIRouter
 
-from model.customer import Customer
 from model.service_provider import ServiceProvider
-from service.customer_service import CustomerService
 from service.service_provider_service import ServiceProviderService
 
 sp_router = APIRouter(

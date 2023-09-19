@@ -14,6 +14,7 @@ customer_router = APIRouter(
 
 # TODO: add password reset api
 
+
 @customer_router.get("/{customer_id}")
 async def get_customer(customer_id: str):
     customer_service = CustomerService()

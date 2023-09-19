@@ -1,5 +1,3 @@
-from typing import Dict
-
 from fastapi import APIRouter
 
 from model.category import Category

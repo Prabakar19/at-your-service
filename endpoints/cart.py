@@ -1,5 +1,3 @@
-from typing import Dict, Any
-
 from fastapi import APIRouter
 
 from service.cart_service import CartService
@@ -12,7 +10,7 @@ cart_router = APIRouter(
 
 
 @cart_router.post("/")
-async def add_to_cart(cart_details: Dict[str, Any]):
+async def add_to_cart(cart_details: dict):
     cart_service = CartService()
     return await cart_service.add_service_to_cart(cart_details)
 

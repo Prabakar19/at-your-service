@@ -9,6 +9,7 @@ service_router = APIRouter(
     responses={404: {"description": "Not found"}},
 )
 
+
 @service_router.post("/")
 async def add_service(service: Service):
     srvc = ServiceService()

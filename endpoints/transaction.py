@@ -2,7 +2,6 @@ from typing import Dict, Any, List
 
 from fastapi import APIRouter
 
-from service.billing_service import BillingService
 from service.transaction_service import TransactionService
 
 transaction_router = APIRouter(
