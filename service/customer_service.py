@@ -1,3 +1,4 @@
+import copy
 from typing import Dict, Any
 
 from dao.address_dao import AddressDao
@@ -31,8 +32,9 @@ class CustomerService:
         return self.transform_cust_for_ui(customer)
 
     async def update_customer_address(self, cust_address: dict):
-        cust_address['customer_id'] = cust_address['customerId']
-        await AddressService().update_address(cust_address)
+        address = copy.deepcopy(cust_address)
+        address['customer_id'] = address.pop('customerId')
+        await AddressService().update_address(address)
         return cust_address
 
     async def customer_login(self, login_details: Dict[str, str]):

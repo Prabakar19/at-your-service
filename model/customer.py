@@ -16,3 +16,13 @@ class Customer(BaseModel):
     password: str
     address: Optional[Address] = None
 
+
+class CustomerRequest(BaseModel):
+    customerId: UUID = uuid4()
+    customerName: str
+    firstName: str
+    lastName: str
+    emailId: str
+    phoneNumber: str
+    password: str
+    address: Optional[Address] = None
