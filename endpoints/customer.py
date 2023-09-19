@@ -28,7 +28,7 @@ async def add_customer(customer: Customer):
 
 
 @customer_router.put("")
-async def update_customer(customer: Customer):
+async def update_customer(customer: CustomerRequest):
     customer_service = CustomerService()
     return await customer_service.update_customer(customer)
 
@@ -40,7 +40,7 @@ async def login_customer(login_details: Dict[str, str]):
     return customer_details if customer_details else {'data': 'Customer not found'}
 
 
-@router.get("/address/{customer_id}")
+@customer_router.get("/address/{customer_id}")
 async def get_customer_address(customer_id: str):
     addr_service = AddressService()
     return await addr_service.get_customer_address(customer_id)
