@@ -2,14 +2,15 @@ import uvicorn
 from fastapi import FastAPI
 from starlette.middleware.cors import CORSMiddleware
 
-from endpoints.meta_endpoints import meta_router
-from endpoints.customer import customer_router
-from endpoints.category import category_router
-from endpoints.service import service_router
+from endpoints.address import address_router
 from endpoints.billing import billing_router
-from endpoints.transaction import transaction_router
 from endpoints.cart import cart_router
+from endpoints.category import category_router
+from endpoints.customer import customer_router
+from endpoints.meta_endpoints import meta_router
+from endpoints.service import service_router
 from endpoints.service_provider import sp_router
+from endpoints.transaction import transaction_router
 
 
 def get_application() -> FastAPI:
@@ -34,6 +35,7 @@ def get_application() -> FastAPI:
     application.include_router(prefix=prefix, router=cart_router)
     application.include_router(prefix=prefix, router=billing_router)
     application.include_router(prefix=prefix, router=transaction_router)
+    application.include_router(prefix=prefix, router=address_router)
     application.include_router(prefix=prefix, router=meta_router)
     return application
 
