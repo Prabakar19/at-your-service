@@ -2,7 +2,7 @@ from typing import Dict
 
 from fastapi import APIRouter
 
-from model.customer import Customer
+from model.customer import Customer, CustomerRequest
 from service.address_service import AddressService
 from service.customer_service import CustomerService
 
@@ -28,11 +28,10 @@ async def add_customer(customer: Customer):
     return {'data': 'Customer added successfully'}
 
 
-@router.put("/")
-async def update_customer(customer: Customer):
+@router.put("")
+async def update_customer(customer: CustomerRequest):
     customer_service = CustomerService()
-    await customer_service.update_customer(customer)
-    return {'data': 'Customer details updated successfully'}
+    return await customer_service.update_customer(customer)
 
 
 @router.post("/login")
