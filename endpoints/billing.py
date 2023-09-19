@@ -4,14 +4,14 @@ from fastapi import APIRouter
 
 from service.billing_service import BillingService
 
-router = APIRouter(
+billing_router = APIRouter(
     prefix="/billing",
-    tags=["Billing"],
+    tags=["Billing APIs"],
     responses={404: {"description": "Not found"}},
 )
 
 
-@router.post("")
+@billing_router.post("")
 async def add_billing(billing: Dict[str, Any]):
     billing_service = BillingService()
     return await billing_service.add_billing(billing)
