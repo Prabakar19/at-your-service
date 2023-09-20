@@ -1,4 +1,4 @@
-from typing import Dict, List, Set
+from typing import Dict, List, Set, Union
 
 from dao.service_provider_dao import ServiceProviderDao
 from model.service_provider import ServiceProvider
@@ -9,7 +9,7 @@ class ServiceProviderService:
 
     async def get_service_provider(self, service_provider_id: str):
         service_provider = await ServiceProviderDao.get_service_provider_by_id(service_provider_id)
-        return self.transform_sp(service_provider)
+        return self.transform_sp_for_ui(service_provider)
 
     async def add_service_provider(self, service_provider: ServiceProvider):
         service_provider = service_provider.model_dump()
@@ -28,12 +28,12 @@ class ServiceProviderService:
             service_provider_address['service_provider_id'] = service_provider['service_provider_id']
             await AddressService().update_address(service_provider_address)
 
-    async def service_provider_login(self, login_details: Dict[str, str]):
-        sp = await ServiceProviderDao.get_service_provider_by_email(login_details['email_id'])
+    async def service_provider_login(self, login_details: Dict[str, str]) -> Union[Dict, None]:
+        sp = await ServiceProviderDao.get_service_provider_by_email(login_details['emailId'])
         if sp:
             password = sp.get('password')
             if password == login_details['password']:
-                return sp
+                return self.transform_sp_for_ui(sp)
 
         return None
 
@@ -43,7 +43,7 @@ class ServiceProviderService:
         return cities
 
     @staticmethod
-    def transform_sp(service_provider):
+    def transform_sp_for_ui(service_provider):
         service_provider['serviceProviderId'] = service_provider.pop('service_provider_id')
         service_provider['companyName'] = service_provider.pop('company_name')
         service_provider['ownerName'] = service_provider.pop('owner_name')
