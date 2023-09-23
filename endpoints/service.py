@@ -13,8 +13,7 @@ service_router = APIRouter(
 @service_router.post("")
 async def add_service(service: ServiceRequest):
     srvc = ServiceService()
-    await srvc.add_service(service.model_dump())
-    return {'data': 'Service added successfully'}
+    return await srvc.add_service(service.model_dump())
 
 
 @service_router.get('/serviceprovider/{service_provider_id}')

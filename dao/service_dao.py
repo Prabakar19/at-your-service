@@ -1,4 +1,4 @@
-from typing import Any, Dict, List
+from typing import Any, Dict, List, Union
 
 import sqlalchemy as sa
 from sqlalchemy import Column, String, select, Float, Boolean, ForeignKey
@@ -34,11 +34,13 @@ class ServiceDao(DbBase):
     async def add_service(cls, service):
         query = [sa.insert(cls).values(service)]
         await PostgresProvider.execute_transaction(query)
+        return await cls.get_service_by_id(service['service_id'])
 
     @classmethod
-    async def get_service_by_id(cls, service_id: str) -> List[Dict[str, Any]]:
+    async def get_service_by_id(cls, service_id: str) -> Union[List[Dict[str, Any]], None]:
         query = select(cls).where(cls.service_id == service_id)
-        return await PostgresProvider.get_list(query)
+        service = await PostgresProvider.get_list(query)
+        return service[0] if service else None
 
     @classmethod
     async def get_service_list_by_ids(cls, service_ids: List[str]) -> List[Dict[str, Any]]:
