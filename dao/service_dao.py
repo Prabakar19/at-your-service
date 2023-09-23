@@ -20,7 +20,7 @@ class ServiceDao(DbBase):
     warranty = Column(Float, name='warranty')
     service_provider_id = Column(String, ForeignKey('serviceprovider.service_provider_id'), name='service_provider_id')
     category_id = Column(String, ForeignKey('category.category_id'), name='category_id')
-    rating = Column(Float, name='rating')
+    rating = Column(Float, name='rating', default=0)
     service_pic = Column(String, name='service_pic')
     city = Column(String, name='city')
     short_description = Column(String, name='short_description')

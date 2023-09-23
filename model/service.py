@@ -21,3 +21,14 @@ class Service(BaseModel):
     short_description: str
     service_pic: Any = ''  # TODO: find datatype for all the picture variable
     # transactions: List[Transaction]  # TODO: change any
+
+
+class ServiceRequest(BaseModel):
+    serviceName: str
+    cost: float
+    discount: float
+    discountAvailability: bool
+    details: str
+    warranty: float
+    serviceProviderId: UUID
+    categoryId: UUID

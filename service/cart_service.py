@@ -25,7 +25,7 @@ class CartService:
         service_ids = [item['service_id'] for item in cart_list]
         service_list = await ServiceDao.get_service_list_by_ids(service_ids)
         for service in service_list:
-            ServiceService.transform_services(service)
+            ServiceService.transform_services_for_ui(service)
 
         return service_list
 
