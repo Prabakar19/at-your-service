@@ -32,3 +32,4 @@ class ServiceRequest(BaseModel):
     warranty: float
     serviceProviderId: UUID
     categoryId: UUID
+    city: str
