@@ -1,6 +1,6 @@
 from fastapi import APIRouter
 
-from model.service import Service
+from model.service import ServiceRequest
 from service.service import ServiceService
 
 service_router = APIRouter(
@@ -10,11 +10,18 @@ service_router = APIRouter(
 )
 
 
-@service_router.post("/")
-async def add_service(service: Service):
+@service_router.post("")
+async def add_service(service: ServiceRequest):
     srvc = ServiceService()
-    await srvc.add_service(service)
+    await srvc.add_service(service.model_dump())
     return {'data': 'Service added successfully'}
+
+
+@service_router.get('/serviceprovider/{service_provider_id}')
+async def get_services_based_on_location(service_provider_id: str):
+    service = ServiceService()
+    service_list = await service.get_service_provider_services(service_provider_id)
+    return service_list
 
 
 @service_router.get('/{category_id}/{location}')

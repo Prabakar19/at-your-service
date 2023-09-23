@@ -2,13 +2,14 @@ from typing import Dict
 
 from dao.service_dao import ServiceDao
 from dao.service_provider_dao import ServiceProviderDao
-from model.service import Service
+from model.service import Service, ServiceRequest
 
 
 class ServiceService:
 
-    async def add_service(self, service: Service):
-        await ServiceDao.add_service(service.model_dump())
+    async def add_service(self, service: dict):
+        service = self.transform_services(service)
+        await ServiceDao.add_service(service)
 
     async def get_service_list_by_location_category(self, category_id: str, location: str):
         services = await ServiceDao.get_services_by_cat_and_location(category_id, location)
@@ -16,12 +17,22 @@ class ServiceService:
             return []
 
         for service in services:
-            self.transform_services(service)
+            self.transform_services_for_ui(service)
+
+        return services
+
+    async def get_service_provider_services(self, service_provider_id: str):
+        services = await ServiceDao.get_service_by_service_provider_id(service_provider_id)
+        if not services:
+            return []
+
+        for service in services:
+            self.transform_services_for_ui(service)
 
         return services
 
     @staticmethod
-    def transform_services(service: Dict[str, any]):
+    def transform_services_for_ui(service: Dict[str, any]):
         service['serviceId'] = service.pop('service_id')
         service['serviceName'] = service.pop('service_name')
         service['discountedCost'] = service.pop('discounted_cost')
@@ -30,3 +41,15 @@ class ServiceService:
         service['serviceProviderId'] = service.pop('service_provider_id')
         service['categoryId'] = service.pop('category_id')
         service['servicePic'] = service.pop('service_pic')
+
+    @staticmethod
+    def transform_services(service: Dict[str, any]):
+        service['service_id'] = service.pop('serviceId')
+        service['service_name'] = service.pop('serviceName')
+        service['discounted_cost'] = service.pop('discountedCost')
+        service['discount_availability'] = service.pop('discountAvailability')
+        service['short_description'] = service.pop('shortDescription', '')
+        service['service_provider_id'] = service.pop('serviceProviderId')
+        service['category_id'] = service.pop('categoryId')
+        service['service_pic'] = service.pop('servicePic', '')
+        return service

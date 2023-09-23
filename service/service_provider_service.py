@@ -29,11 +29,11 @@ class ServiceProviderService:
             await AddressService().update_address(service_provider_address)
 
     async def service_provider_login(self, login_details: Dict[str, str]):
-        sp = await ServiceProviderDao.get_service_provider_by_email(login_details['email_id'])
+        sp = await ServiceProviderDao.get_service_provider_by_email(login_details['emailId'])
         if sp:
             password = sp.get('password')
             if password == login_details['password']:
-                return sp
+                return self.transform_sp(sp)
 
         return None
 
