@@ -37,6 +37,10 @@ class ServiceService:
 
         return services
 
+    async def remove_service(self, service_id: str):
+        await ServiceDao.delete_service_by_id(service_id)
+        return service_id
+
     @staticmethod
     def transform_services_for_ui(service: Dict[str, any]):
         service['serviceId'] = service.pop('service_id')
