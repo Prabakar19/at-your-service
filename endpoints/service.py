@@ -28,3 +28,9 @@ async def get_services_based_on_location(category_id: str, location: str):
     service = ServiceService()
     service_list = await service.get_service_list_by_location_category(category_id, location)
     return service_list
+
+
+@service_router.delete('/id/{service_id}')
+async def get_services_based_on_location(service_id: str):
+    service = ServiceService()
+    return await service.remove_service(service_id)

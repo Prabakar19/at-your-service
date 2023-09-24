@@ -1,4 +1,4 @@
-from typing import Any, List
+from typing import Any, List, Optional
 from uuid import UUID
 from pydantic import BaseModel
 from model.transaction import Transaction
@@ -26,7 +26,7 @@ class Service(BaseModel):
 class ServiceRequest(BaseModel):
     serviceName: str
     cost: float
-    discount: float
+    discount: Optional[float] = 0
     discountAvailability: bool
     details: str
     warranty: float

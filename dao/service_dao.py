@@ -1,7 +1,7 @@
 from typing import Any, Dict, List, Union
 
 import sqlalchemy as sa
-from sqlalchemy import Column, String, select, Float, Boolean, ForeignKey
+from sqlalchemy import Column, String, select, Float, Boolean, ForeignKey, delete
 from sqlalchemy.orm import relationship
 
 from dao.transaction_dao import TransactionDao
@@ -81,3 +81,8 @@ class ServiceDao(DbBase):
     async def update_rating(cls, service_id: str, rating: float):
         query = [sa.update(cls).where(cls.service_id == service_id).values({'rating': rating})]
         await PostgresProvider.execute_transaction(query)
+
+    @classmethod
+    async def delete_service_by_id(cls, service_id: str):
+        query = delete(cls).where(cls.service_id == service_id)
+        await PostgresProvider.execute(query)
