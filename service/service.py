@@ -1,8 +1,6 @@
 from typing import Dict
 
 from dao.service_dao import ServiceDao
-from dao.service_provider_dao import ServiceProviderDao
-from model.service import Service, ServiceRequest
 from utils.id_generator import IdGenerator
 
 
@@ -11,9 +9,13 @@ class ServiceService:
     async def add_service(self, service: dict):
         service['serviceId'] = IdGenerator.generate_uuid()
         service = self.transform_services(service)
-        if service['discount_availability']:
-            service['discounted_cost'] = service['cost'] * service['discount'] * 0.01
-        return await ServiceDao.add_service(service)
+        service['discounted_cost'] = service['cost']
+        if service['discount_availability'] and service['discount'] != 0:
+            service['discounted_cost'] = service['cost'] - (service['cost'] * service['discount'] * 0.01)
+
+        service = await ServiceDao.add_service(service)
+        self.transform_services_for_ui(service)
+        return service
 
     async def get_service_list_by_location_category(self, category_id: str, location: str):
         services = await ServiceDao.get_services_by_cat_and_location(category_id, location)
