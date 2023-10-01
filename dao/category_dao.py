@@ -47,4 +47,4 @@ class CategoryDao(DbBase):
     @classmethod
     async def update_category(cls, category):
         query = [sa.update(cls).where(cls.category_id == category['category_id']).values(category)]
-        await PostgresProvider.execute(query)
+        await PostgresProvider.execute_transaction(query)

@@ -73,9 +73,14 @@ class ServiceDao(DbBase):
         return await PostgresProvider.get_list(query)
 
     @classmethod
+    async def update_service(cls, service):
+        query = [sa.update(cls).where(cls.service_id == service['service_id']).values(service)]
+        await PostgresProvider.execute_transaction(query)
+
+    @classmethod
     async def update_category(cls, service):
         query = [sa.update(cls).where(cls.service_id == service['service_id']).values(service)]
-        await PostgresProvider.execute(query)
+        await PostgresProvider.execute_transaction(query)
 
     @classmethod
     async def update_rating(cls, service_id: str, rating: float):

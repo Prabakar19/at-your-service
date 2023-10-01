@@ -1,6 +1,6 @@
 from fastapi import APIRouter
 
-from model.service import ServiceRequest
+from model.service import ServiceRequest, Service
 from service.service import ServiceService
 
 service_router = APIRouter(
@@ -10,10 +10,16 @@ service_router = APIRouter(
 )
 
 
-@service_router.post("")
+@service_router.post('')
 async def add_service(service: ServiceRequest):
     srvc = ServiceService()
     return await srvc.add_service(service.model_dump())
+
+
+@service_router.put('')
+async def modify_service(service: dict):
+    srvc = ServiceService()
+    return await srvc.modify_service(service)
 
 
 @service_router.get('/serviceprovider/{service_provider_id}')
@@ -31,6 +37,6 @@ async def get_services_based_on_location(category_id: str, location: str):
 
 
 @service_router.delete('/id/{service_id}')
-async def get_services_based_on_location(service_id: str):
+async def remove_service(service_id: str):
     service = ServiceService()
     return await service.remove_service(service_id)
