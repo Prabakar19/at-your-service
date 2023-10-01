@@ -3,4 +3,4 @@ postgres:
   port: 5051
   database: atyourservice
   user: postgres
-  password: Lucifer19+
+  password: yourpassword
