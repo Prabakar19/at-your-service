@@ -20,7 +20,6 @@ class Service(BaseModel):
     city: str
     short_description: str
     service_pic: Any = ''  # TODO: find datatype for all the picture variable
-    # transactions: List[Transaction]  # TODO: change any
 
 
 class ServiceRequest(BaseModel):
