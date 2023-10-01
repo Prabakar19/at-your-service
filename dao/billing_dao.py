@@ -48,4 +48,4 @@ class BillingDao(DbBase):
     @classmethod
     async def update_address(cls, billing):
         query = [sa.update(cls).where(cls.billing_id == billing['billing_id']).values(billing)]
-        await PostgresProvider.execute(query)
+        await PostgresProvider.execute_transaction(query)

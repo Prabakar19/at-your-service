@@ -1,7 +1,8 @@
-from typing import Any, List, Optional
+from typing import Any, Optional
 from uuid import UUID
+
 from pydantic import BaseModel
-from model.transaction import Transaction
+
 from utils.id_generator import IdGenerator
 
 

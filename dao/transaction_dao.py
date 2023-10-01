@@ -61,4 +61,4 @@ class TransactionDao(DbBase):
     @classmethod
     async def update_transaction(cls, transaction):
         query = [sa.update(cls).where(cls.transaction_id == transaction['transaction_id']).values(transaction)]
-        await PostgresProvider.execute(query)
+        await PostgresProvider.execute_transaction(query)
